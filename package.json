@@ -7,9 +7,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@nextui-org/react": "^1.0.0-beta.9",
+    "lottie-react": "^2.3.0",
     "next": "12.1.4",
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "react-icons": "^4.4.0",
+    "react-lottie": "^1.2.3",
+    "react-scrollmagic": "^2.3.0",
+    "react-spring": "^9.4.5",
+    "react-spring-3d-carousel": "1.1.0",
+    "react-svg": "^15.0.4",
+    "react-with-gesture": "4.0.8"
   },
   "devDependencies": {
     "eslint": "8.12.0",
