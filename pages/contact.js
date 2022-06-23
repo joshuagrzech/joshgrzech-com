@@ -1,5 +1,4 @@
 import { useSpring, animated } from "react-spring";
-import { Slide } from "../components/Slide";
 
 export default function Home() {
   return (
@@ -17,10 +16,6 @@ export default function Home() {
         padding: 50,
         perspective: 500,
       }}
-    >
-      <Slide viewIndex={1} />
-      <Slide viewIndex={2} />
-      <Slide viewIndex={3} />
-    </animated.div>
+    ></animated.div>
   );
 }
