@@ -10,7 +10,8 @@ function MyApp({ Component, pageProps }) {
         style={{
           display: "flex",
           flexDirection: "row",
-          backgroundImage: "linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%)",
+          background:
+            "linear-gradient(90deg, hsla(202, 71%, 27%, 1) 0%, hsla(176, 45%, 66%, 1) 100%)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

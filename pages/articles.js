@@ -1,8 +1,6 @@
-import { useSpring, animated } from "react-spring";
-
 export default function Home() {
   return (
-    <animated.div
+    <div
       style={{
         width: "100%",
         height: "100%",
@@ -16,6 +14,6 @@ export default function Home() {
         padding: 50,
         perspective: 500,
       }}
-    ></animated.div>
+    ></div>
   );
 }

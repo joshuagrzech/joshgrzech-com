@@ -1,16 +1,9 @@
 import React from "react";
 
-import { Button } from "@nextui-org/react";
 import { useState, useRef, useEffect } from "react";
-import { useSpring, animated } from "react-spring";
-import { Slide } from "../components/Slide";
-import { Controller, Scene } from "react-scrollmagic";
-import { FaChevronCircleUp } from "react-icons/fa";
-import Carousel from "../components/Carousel";
+
 import VerticalCarousel from "../components/VerticalCarousel";
 import { config } from "react-spring";
-import Image from "next/image";
-import AppSlide from "../components/AppSlide";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,6 +15,7 @@ export default function Home() {
         subtitle: "Stream your local files in true resolution",
         platforms: ["macOs", "iOS"],
         technologies: ["Swift"],
+        video: "./streamer.mp4",
       },
     },
     {
@@ -32,6 +26,7 @@ export default function Home() {
         platforms: ["Android", "iOS"],
         technologies: ["React Native", "Swift", "Firebase", "OpenAI"],
         image: "/1024.png",
+        video: "./astro.mp4",
       },
     },
     {
@@ -42,6 +37,7 @@ export default function Home() {
         platforms: ["iOS", "Android"],
         subtitle: "Track, share, & split bills with housemates",
         image: "/512.png",
+        video: "./whatbill.mp4",
       },
     },
     {
@@ -53,17 +49,7 @@ export default function Home() {
         technologies: ["Swift", "CoreML"],
         href: "/organizer",
         image: "/180.png",
-      },
-    },
-
-    {
-      key: 6,
-      content: {
-        title: "Organizer",
-        subtitle: "Organize anything",
-        platforms: ["macOs"],
-        technologies: ["Swift"],
-        href: "/organizer",
+        video: "./catchlog.mp4",
       },
     },
   ]);

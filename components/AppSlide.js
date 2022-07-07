@@ -3,23 +3,17 @@ import React from "react";
 import { Button } from "@nextui-org/react";
 import { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
-import { Slide } from "./Slide";
-import { Controller, Scene } from "react-scrollmagic";
+
 import {
-  FaAppStore,
-  FaChevronCircleLeft,
   FaChevronCircleRight,
   FaReact,
   FaRobot,
   FaSwift,
 } from "react-icons/fa";
-import Carousel from "./Carousel";
-import VerticalCarousel from "./VerticalCarousel";
-import { config } from "react-spring";
+
 import Image from "next/image";
 import { ReactSVG } from "react-svg";
-import Lottie from "lottie-react";
-import * as iphone from "./iphone.json";
+
 import { SiFirebase } from "react-icons/si";
 
 export default function AppSlide({ slide, visible, index }) {
@@ -30,36 +24,29 @@ export default function AppSlide({ slide, visible, index }) {
   }));
 
   useEffect(() => {
-    if (lottieRef.current) {
-      if (visible) {
-        setTimeout(() => {
-          api.start({
-            opacity: 1,
-            height: "100%",
-          });
-        }, 1000);
-        lottieRef.current.setDirection(1);
-        lottieRef.current.play();
-      } else {
+    if (visible) {
+      setTimeout(() => {
         api.start({
-          opacity: 0,
-          height: "0%",
+          opacity: 1,
+          height: "100%",
         });
-        lottieRef.current.setDirection(-1);
-        lottieRef.current.play();
-      }
+      }, 1000);
+    } else {
+      api.start({
+        opacity: 0,
+        height: "0%",
+      });
     }
-  }, [visible, lottieRef, api]);
+  }, [visible, api]);
   return (
     <>
       <animated.div
         style={{
-          ...opacity,
           position: "absolute",
           height: "120%",
           width: "105%",
           right: "3%",
-          backgroundColor: "rgba(0, 0, 0, .65)",
+          backgroundColor: "rgba(255, 253, 255, 1)",
           backdropFilter: "blur(5px)",
           borderRadius: 20,
         }}
@@ -90,18 +77,25 @@ export default function AppSlide({ slide, visible, index }) {
           display: "flex",
         }}
       >
-        <Lottie
-          lottieRef={lottieRef}
-          speed={2}
-          animationData={iphone}
-          style={{
-            height: "100%",
-            width: "50%",
-            marginRight: "10%",
-          }}
-          autoplay={false}
-          loop={false}
-        />
+        {visible ? (
+          <video
+            src={slide.video}
+            autoPlay
+            style={{ zIndex: 100, marginRight: 75 }}
+          />
+        ) : (
+          <Image
+            alt="screenshot"
+            src="/0.png"
+            width={300}
+            height={300}
+            style={{
+              zIndex: 100,
+              backgroundBlendMode: "multiply",
+            }}
+          />
+        )}
+
         <animated.div
           style={{
             ...opacity,
