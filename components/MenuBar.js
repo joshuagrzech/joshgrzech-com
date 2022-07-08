@@ -50,7 +50,6 @@ export const MenuBar = () => {
     <animated.nav
       style={{
         ...styles,
-        width: width * 0.25,
         backgroundColor: "rgba(0, 0, 0, .15)",
         backdropFilter: "blur(5px)",
         height: "100%",
@@ -62,6 +61,8 @@ export const MenuBar = () => {
         textAlign: "center",
         display: "flex",
         padding: 50,
+        width: width * 0.2,
+        justifyContent: "space-between",
       }}
     >
       <div
@@ -69,19 +70,18 @@ export const MenuBar = () => {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "space-between",
           alignItems: "center",
+          width: "100%"
         }}
       >
-        <Image
+   <Image
           src="/jglogo.png"
-          width={"300vw"}
-          height={"150vh"}
+          width={"300px"}
+          height={"150px"}
           alt="logo"
-          style={{ flex: 1 }}
         />
-
-        <MenuButton href="/" selected={asPath === "/"} title="Applications" />
+        <MenuButton href="/" selected={asPath === "/"} title="Apps" />
         <MenuButton
           href="/articles"
           selected={asPath === "/articles"}
@@ -97,23 +97,25 @@ export const MenuBar = () => {
           selected={asPath === "/contact"}
           title="Contact"
         />
+ 
 
-        <div
+
+          <div
           style={{
             flex: 1,
             flexDirection: "row",
             display: "flex",
-            marginTop: 250,
             marginBottom: 20,
-            alignSelf: "center",
+            marginTop: 70
           }}
         >
+          
           <FaGithub size={50} color="white" style={{ marginRight: 10 }} />
           <FaTwitter size={50} color="white" style={{ marginRight: 10 }} />
           <FaYoutube size={50} color="white" style={{ marginRight: 10 }} />
-          <FaLinkedin size={50} color="white" style={{ marginRight: 10 }} />
         </div>
-      </div>
+</div>
+      
     </animated.nav>
   );
 };

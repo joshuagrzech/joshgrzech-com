@@ -18,61 +18,49 @@ import { route } from "next/dist/server/router";
 import NextLink from "next/link";
 
 export const MenuButton = ({ href, selected, title }) => {
-  const [boxShadow, api] = useSpring(() => ({
-    boxShadow: `inset 0 0 10px rgba(0, 0, 0, 0.0)`,
-  }));
+ const [hover, setHover] = useState(false);
+  const button = useSpring({
+    transform: selected ? "scale(1.5)" : "scale(1)",
+    color: selected ? "#fff" : "rgba(0, 0, 0, 0.85)",
 
-  const bottomBorder = () => {
-    if (selected) {
-      return "5px solid #fff";
-    }
-    return "";
-  };
+  });
+  const hoverAnimation = useSpring({
+    transform: selected ? "scale(1)" : hover ? "scale(1.15)" : "scale(1)" 
+  });
 
-  useEffect(() => {
-    selected &&
-      api.start({
-        boxShadow: `inset 0 0 10px rgba(0, 0, 0, 0.5)`,
-      });
-    selected === false &&
-      api.start({
-        boxShadow: `inset 0 0 10px rgba(0, 0, 0, 0.0)`,
-      });
-  }, [selected, api]);
+
+
 
   return (
     <animated.div
       style={{
-        ...boxShadow,
+        ...hoverAnimation,
         flex: 1,
         marginTop: 20,
-        backgroundColor: selected
-          ? "rgba(0, 0, 0, 0.25)"
-          : "rgba(0, 0, 0, 0.05)",
+        
         borderRadius: 10,
-        overflow: "hidden",
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center",
         display: "flex",
+        textShadow: "0 0 10px rgba(0,0,0,0.55)",
       }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <NextLink href={href} passHref>
         <Link>
-          <Text
+          <animated.div
             style={{
-              fontSize: "2.5rem",
+              fontSize: "3rem",
               fontWeight: "bold",
-              fontFamily: "Menlo",
+              fontFamily: "Arial",
               textAlign: "center",
-              color: selected ? "#fff" : "rgba(0, 0, 0, 0.85)",
-              flex: 1,
-              padding: 15,
-              borderBottom: bottomBorder(),
+              ...button,
             }}
           >
             {title}
-          </Text>
+          </animated.div>
         </Link>
       </NextLink>
     </animated.div>

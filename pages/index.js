@@ -3,21 +3,18 @@ import React from "react";
 import { useState, useRef, useEffect } from "react";
 
 import VerticalCarousel from "../components/VerticalCarousel";
-import { config } from "react-spring";
+import Image from "next/image";
+import HomeItem from "../components/HomeItem";
+
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+ 
+
+
   const [slides, setSlides] = useState([
-    {
-      key: 1,
-      content: {
-        title: "Streamer",
-        subtitle: "Stream your local files in true resolution",
-        platforms: ["macOs", "iOS"],
-        technologies: ["Swift"],
-        video: "./streamer.mp4",
-      },
-    },
+    
     {
       key: 2,
       content: {
@@ -27,6 +24,8 @@ export default function Home() {
         technologies: ["React Native", "Swift", "Firebase", "OpenAI"],
         image: "/1024.png",
         video: "./astro.mp4",
+        color: "rgb(214, 180, 244)",
+        backPic: "/astro-back.png"
       },
     },
     {
@@ -38,6 +37,9 @@ export default function Home() {
         subtitle: "Track, share, & split bills with housemates",
         image: "/512.png",
         video: "./whatbill.mp4",
+        color: "rgb(253, 219, 3)",
+        backPic: "/whatbill-back.png"
+
       },
     },
     {
@@ -50,28 +52,55 @@ export default function Home() {
         href: "/organizer",
         image: "/180.png",
         video: "./catchlog.mp4",
+        backPic: "/catchlog-back.png",
+        color: "rgb(16, 19, 244)"
+
+      },
+    },
+    {
+      key: 1,
+      content: {
+        title: "Streamer",
+        subtitle: "Stream your local files in true resolution",
+        platforms: ["macOs", "iOS"],
+        technologies: ["Swift"],
+        video: "./streamer.mp4",
+        backPic: "/astro-back.png",
+        color: "rgb(155, 155, 156)",
+        image: "/streamer-icon.png",
+
       },
     },
   ]);
+
+  const renderRow = (slides) => {
+    return 
+  }
+  
 
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        
         width: "100%",
         height: "100%",
         margin: "0 auto",
         flex: 1,
+        padding: 50,
+        justifyContent: "center",
       }}
     >
-      <VerticalCarousel
-        slides={slides}
-        offsetRadius={3}
-        showNavigation
-        animationConfig={config.gentle}
-      />
+      
+        {slides.map((slide, index) => (
+      
+    
+      <HomeItem slide={slide.content} key={index} index={index}/>
+
+  ))}
+
+  
     </div>
   );
 }
