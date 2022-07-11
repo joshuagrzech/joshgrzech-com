@@ -15,8 +15,9 @@ import Image from "next/image";
 import { ReactSVG } from "react-svg";
 
 import { SiFirebase } from "react-icons/si";
+import HoverButton from "./HoverButton";
 
-export default function AppSlide({ slide, visible, index }) {
+export default function AppSlide({ slide, visible, index, detailClick, isMobile }) {
   const lottieRef = useRef();
   const [opacity, api] = useSpring(() => ({
     opacity: 0,
@@ -57,11 +58,11 @@ export default function AppSlide({ slide, visible, index }) {
           ...opacity,
           width: "100%",
           zIndex: 100,
-          fontSize: "7rem",
+          fontSize: isMobile ? "3rem" :  "7rem",
           color: "white",
           fontWeight: "bold",
           textAlign: "center",
-          fontFamily: "Arial",
+          fontFamily: "Barlow",
           textShadow: "0 0 20px rgba(0,0,0,0.5)",
         }}
       >
@@ -72,7 +73,7 @@ export default function AppSlide({ slide, visible, index }) {
         style={{
           height: "100%",
           width: "100%",
-          flexDirection: "row",
+          flexDirection: isMobile ? "column" : "row",
           display: "flex",
           alignContent: "center",
         }}
@@ -84,7 +85,7 @@ export default function AppSlide({ slide, visible, index }) {
               autoPlay={true}
               muted={true}
               playsInline={true}
-              style={{ zIndex: 100, width: "85%", height: "85%" }}
+              style={{ zIndex: 100, width: isMobile ? "100%" : "85%", height: "65%" }}
             />
           </animated.div>
         )}
@@ -102,11 +103,11 @@ export default function AppSlide({ slide, visible, index }) {
           <div
             style={{
               width: "100%",
-              fontSize: "2rem",
+              fontSize: isMobile ? "1rem" :  "2rem",
               fontWeight: "bold",
               fontStyle: "italic",
               textAlign: "center",
-              fontFamily: "Arial",
+              fontFamily: "Barlow",
               marginBottom: "10%",
 
               textShadow: "0 0 10px rgba(0,0,0,0.25)",
@@ -124,13 +125,16 @@ export default function AppSlide({ slide, visible, index }) {
               borderRadius: 20,
               display: "flex",
               flexDirection: "column",
-              marginRight: 20,
-              padding: 20,
+              width: isMobile ? window.innerWidth - 150 : "95%",
+              marginRight: isMobile ? 0 : 50,
+              marginLeft: isMobile ? "15%" : 0,
+              padding: isMobile ? 0 : 20,
             }}
           >
-            <div
-              style={{
-                fontSize: "2rem",
+            <HoverButton onClick={
+              () => detailClick(slide.route)
+            }
+             style={{ fontSize: "2rem",
                 color: "black",
                 fontWeight: "bold",
                 textAlign: "center",
@@ -139,18 +143,16 @@ export default function AppSlide({ slide, visible, index }) {
                 display: "flex",
                 justifyContent: "space-around",
                 alignItems: "center",
-                height: "100px",
-                width: "75%",
+            
                 alignSelf: "center",
                 marginTop: 20,
-                boxShadow: `inset 0 0 10px rgba(0, 0, 0, 0.5)`,
                 backgroundColor: "rgba(0, 0, 0, 0.25)",
-                borderRadius: 10,
-              }}
-            >
+                borderRadius: 10,   padding: 10, height: "150px",
+                width: "75%"}}>
+            
               Details
               <FaChevronCircleRight size={50} />
-            </div>
+            </HoverButton>
             <div
               style={{
                 fontSize: "1.5rem",
@@ -166,7 +168,7 @@ export default function AppSlide({ slide, visible, index }) {
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: isMobile ? "column" : "row",
                 marginTop: "1vh",
                 alignSelf: "center",
               }}

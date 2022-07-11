@@ -54,7 +54,7 @@ export const MenuButton = ({ href, selected, title }) => {
             style={{
               fontSize: "3rem",
               fontWeight: "bold",
-              fontFamily: "Arial",
+              fontFamily: 'Barlow',
               textAlign: "center",
               ...button,
             }}
