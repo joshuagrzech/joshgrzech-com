@@ -19,7 +19,7 @@ const HomeItem = ({ slide, index, detailClick, isMobile }) => {
   const background = useSpring({
     height: isMobile ? "50%" : "95%",
           width: hover ? isMobile ? "95%" : "75%" : "0%",
-    backgroundColor: hover ? slide.color : "rgba(0,0,0,0)",
+    backgroundColor: hover ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0)",
     boxShadow: hover ? "0 0 20px rgba(0,0,0,0.5)" : "0 0 10px rgba(0,0,0,0.0)",
   });
   const appIcon = useSpring({
@@ -34,8 +34,8 @@ const HomeItem = ({ slide, index, detailClick, isMobile }) => {
         <animated.img
           src={slide.image ? slide.image : "/"}
           alt={slide.title}
-          width={100}
-          height={100}
+          width={"100px"}
+          height={"100px"}
           style={{ borderRadius: 20, ...appIcon }}
           
         />
@@ -47,7 +47,7 @@ const HomeItem = ({ slide, index, detailClick, isMobile }) => {
           position: "absolute",
           top: isMobile ? 150 : 15,
           left: isMobile ? 10 : "15%",
-     
+          boxShadow: "0 0 20px rgba(0,0,0,0.5)",
           borderRadius: 20,
         }}
         onClick={() => setOpen(true)}

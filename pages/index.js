@@ -8,11 +8,10 @@ import HomeItem from "../components/HomeItem";
 import { animated, useSpring } from "@react-spring/web";
 import { getFirestore, getDocs, collection } from "firebase/firestore";
 import { useRouter } from "next/router";
-
+import { config } from "react-spring";
 
 export default function Home({ firebase, isMobile }) {
   const router = useRouter();
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isShowing, setIsShowing] = useState(false);
   const [nextRoute, setNextRoute] = useState(null);
   const transition = useSpring({
@@ -46,7 +45,6 @@ export default function Home({ firebase, isMobile }) {
         },
       };
     })
-    console.log(slides)
     setSlides(slides);
   }
  
@@ -85,7 +83,7 @@ export default function Home({ firebase, isMobile }) {
         justifyContent: "space-between",
       }}
     >
-      {slides  && slides.map((slide, index) => (
+       {slides && slides.map((slide, index) => (
         <HomeItem
         isMobile={isMobile}
           detailClick={detailClick}
@@ -94,6 +92,7 @@ export default function Home({ firebase, isMobile }) {
           index={index}
         />
       ))}
+      
     </animated.div>
   );
 }

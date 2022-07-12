@@ -57,8 +57,9 @@ export const MenuBar = ({ isMobile }) => {
         style={{
           ...styles,
           ...mobileHeight,
-          backgroundColor: "rgba(0, 0, 0, .15)",
-          backdropFilter: "blur(5px)",
+          background: 'linear-gradient(to bottom, rgba(40,48,72, 0.5), rgba(133,147,152, 0.5))',
+
+          backdropFilter: "blur(5px) opacity(0.5)",
           borderTopRightRadius: isMobile ? 0 : 100,
           borderBottomRightRadius: isMobile ? 0 : 100,
           marginTop: isMobile ? 0 : 10,
@@ -72,21 +73,22 @@ export const MenuBar = ({ isMobile }) => {
         }}
       >
         
-        <div onClick={() => {
-           if (mobileExpanded === true) {
-            lottieRef.current.setDirection(-1)
-            lottieRef.current.play()
-            setMobileExpanded(false);
-          } else {
-            lottieRef.current.setDirection(1)
-            lottieRef.current.play()
-            setMobileExpanded(true)
-          }
-        }} style={{position: 'absolute', zIndex: 100, top: 20, left: 20, display: "flex", flexDirection: "row"}}>
+        <div style={{position: 'absolute', zIndex: 100, top: 20, left: 20, display: "flex", flexDirection: "row"}}>
         
         {isMobile === true && (
           <>
           <Lottie
+           onClick={() => {
+            if (mobileExpanded === true) {
+             lottieRef.current.setDirection(-1)
+             lottieRef.current.play()
+             setMobileExpanded(false);
+           } else {
+             lottieRef.current.setDirection(1)
+             lottieRef.current.play()
+             setMobileExpanded(true)
+           }
+         }}
           animationData={menuButton}
           style={{ height: 100, width: 100, flex: 1}}
           autoplay={false}

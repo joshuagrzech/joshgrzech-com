@@ -24,11 +24,11 @@ function MyApp({ Component, pageProps }) {
     setIsMobile(window.innerWidth / window.innerHeight < 1.5);
     const handleResize = () => {
       setIsMobile(window.innerWidth / window.innerHeight < 1.5);
-    }
+    };
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
-    }
+    };
   }, []);
 
   return (
@@ -37,14 +37,15 @@ function MyApp({ Component, pageProps }) {
         style={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
-          backgroundColor: "#0093E9",
-          backgroundImage: "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)",
+          backgroundImage: 'linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%)',
+          
 
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           height: isMobile ? "300vh" : "100vh",
-          overflow: isMobile ? "visible" : "hidden",
+          overflowX: "hidden",
+
         }}
       >
         <Head>
@@ -85,8 +86,8 @@ function MyApp({ Component, pageProps }) {
             rel="stylesheet"
           />
         </Head>
-        <MenuBar isMobile={isMobile}/>
-        <Component {...pageProps } isMobile={isMobile} firestore={app}/>
+        <MenuBar isMobile={isMobile} />
+        <Component {...pageProps} isMobile={isMobile} firestore={app} />
       </div>
     </NextUIProvider>
   );

@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { route } from "next/dist/server/router";
 import NextLink from "next/link";
 
-export const MenuButton = ({ href, selected, title }) => {
+export const MenuButton = ({ href, selected, title, onClick, isMobile }) => {
  const [hover, setHover] = useState(false);
   const button = useSpring({
     transform: selected ? "scale(1.5)" : "scale(1)",
@@ -48,21 +48,41 @@ export const MenuButton = ({ href, selected, title }) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <NextLink href={href} passHref>
-        <Link>
-          <animated.div
-            style={{
-              fontSize: "3rem",
-              fontWeight: "bold",
-              fontFamily: 'Barlow',
-              textAlign: "center",
-              ...button,
-            }}
-          >
-            {title}
-          </animated.div>
-        </Link>
-      </NextLink>
+      {href && (
+<NextLink href={href} passHref>
+<Link>
+  <animated.div
+    style={{
+      fontSize: "3rem",
+      fontWeight: "bold",
+      fontFamily: 'Barlow',
+      textAlign: "center",
+      ...button,
+    }}
+  >
+    {title}
+  </animated.div>
+</Link>
+</NextLink>
+
+      )}
+      {!href && (
+        <animated.div
+        style={{
+
+          fontSize: isMobile ? "1.5rem" : "3rem",
+          fontWeight: "bold",
+          fontFamily: 'Barlow',
+          textAlign: "center",
+          cursor: "pointer",
+          ...button,
+        }}
+        onClick={onClick}
+      >
+        {title}
+      </animated.div>
+      )}
+      
     </animated.div>
   );
 };
