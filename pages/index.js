@@ -1,16 +1,23 @@
-import React, { useLayoutEffect } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { useState, useRef, useEffect } from "react";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+} from 'firebase/firestore';
+import { useRouter } from 'next/router';
 
-import VerticalCarousel from "../components/VerticalCarousel";
-import Image from "next/image";
-import HomeItem from "../components/HomeItem";
-import { animated, useSpring } from "@react-spring/web";
-import { getFirestore, getDocs, collection } from "firebase/firestore";
-import { useRouter } from "next/router";
-import { config } from "react-spring";
+import {
+  animated,
+  useSpring,
+} from '@react-spring/web';
 
-export default function Home({ firebase, isMobile }) {
+import HomeItem from '../components/HomeItem';
+
+export default function Home({ firebase, isMobile, size }) {
   const router = useRouter();
   const [isShowing, setIsShowing] = useState(false);
   const [nextRoute, setNextRoute] = useState(null);
@@ -65,16 +72,13 @@ export default function Home({ firebase, isMobile }) {
       style={{
         ...transition,
         width: "100%",
-        height: "100%",
         borderTopRightRadius: 100,
         borderBottomRightRadius: 100,
         marginTop: 10,
         marginBottom: 20,
-
         display: "flex",
         flexDirection: isMobile ? "row" : "column",
-        width: "100%",
-        height: "100%",
+        
         margin: "0 auto",
         flex: 1,
         padding: isMobile ? 0 : 50,

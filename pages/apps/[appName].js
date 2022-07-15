@@ -1,25 +1,62 @@
-import React, { useEffect, useState } from "react";
-import usePageTransition from "../../components/pageTransition";
-import { animated, useSpring } from "@react-spring/web";
-import Breadcrumbs from "nextjs-breadcrumbs";
-import { FaArrowLeft } from "react-icons/fa";
-import HoverButton from "../../components/HoverButton";
-import { useRouter } from "next/router";
-import { MenuButton } from "../../components/MenuButton";
-import { getFirestore, getDoc, doc } from "firebase/firestore";
-import Image from "next/image";
-export default function Astro({ firebase, isMobile }) {
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import {
+  doc,
+  getDoc,
+  getFirestore,
+} from 'firebase/firestore';
+import { useRouter } from 'next/router';
+import { FaArrowLeft } from 'react-icons/fa';
+
+import {
+  animated,
+  useSpring,
+} from '@react-spring/web';
+
+import AppDetail from '../../components/AppDetail';
+import HoverButton from '../../components/HoverButton';
+import { MenuButton } from '../../components/MenuButton';
+
+export default function Astro({ firebase, isMobile, size }) {
   const [isShowing, setIsShowing] = useState(false);
   const router = useRouter();
   const [slide, setSlide] = useState();
   const [index, setIndex] = useState(0);
+  const [featuresShowing, setFeaturesShowing] = useState(true);
+  const [devShowing, setDevShowing] = useState(false);
+const featuresOpacity = useSpring({
+  from: {
+    opacity: featuresShowing ? 1 : 0,
+  },
+  to: {
+    opacity: featuresShowing ? 1 : 0,
+  },
+});
+const devOpacity = useSpring({
+  from: {
+    opacity: devShowing ? 1 : 0,
+  },
+  to: {
+    opacity: devShowing ? 1 : 0,
+  },
+});
+
+  const changePage = () => {
+    setDevShowing(!devShowing);
+    setFeaturesShowing(!featuresShowing);
+  }
 
   const transition = useSpring({
     from: {
-      transform: isShowing ? `translateX(0%)` : `translateX(125%)`,
+      transform: isMobile ? "translateX(0)" : isShowing ? `translateX(0%)` : `translateX(125%)`,
+      width: size.width * 0.75,
     },
     to: {
-      transform: isShowing ? `translateX(0%)` : `translateX(125%))`,
+      transform: isMobile ? "translateX(0)" : isShowing ? `translateX(0%)` : `translateX(125%)`,
+      width: size.width * 0.75,
     },
     onRest: () => {
       !isShowing && router.push("/");
@@ -44,25 +81,23 @@ export default function Astro({ firebase, isMobile }) {
   }, [router, firebase]);
 
   return (
-    <>
+    <div style={{height: isMobile ? '1500%' : '100%', width: '100%', padding: 20, background: 'linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898',
+    backgroundBlendMode: 'multiply,multiply',}}>
       {slide && (
         <animated.div
           style={{
             ...transition,
-            width: "100%",
-            height: "100%",
             borderTopRightRadius: 100,
             borderBottomRightRadius: 100,
             marginTop: 10,
             marginBottom: 20,
-
             display: "flex",
             padding: 50,
             perspective: 500,
             display: "flex",
             flexDirection: "column",
-            width: "100%",
-            height: "100%",
+   
+        
             margin: "0 auto",
             flex: 1,
             padding: 50,
@@ -83,11 +118,12 @@ export default function Astro({ firebase, isMobile }) {
             <FaArrowLeft
               onClick={() => {
                 setIsShowing(false);
+                router.push("/");
               }}
             />
           </HoverButton>
 
-          <animated.div
+          <div
             style={{
               flex: 1,
               display: "flex",
@@ -104,81 +140,40 @@ export default function Astro({ firebase, isMobile }) {
                 alignSelf: "center",
               }}
             />
-            <animated.div
-              style={{ display: "flex", flexDirection: "row" }}
+            <div
+              style={{ display: "flex", flexDirection: "row"}}
             >
               <MenuButton
               isMobile={isMobile}
-                selected={index === 0}
+                selected={featuresShowing}
                 title="Features"
-                onClick={() => setIndex(0)}
+                onClick={() => changePage()}
               />
               <MenuButton
                             isMobile={isMobile}
 
-                selected={index === 1}
-                title="Development Info"
-                onClick={() => setIndex(1)}
+                selected={devShowing}
+                title="Technical Info"
+                onClick={() => changePage()}
               />
-            </animated.div>
+            </div>
 
-            {slide.details && (
-              <animated.div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  width: "80%",
-                  alignSelf: "center",
-                  backgroundColor: "",
-                  borderRadius: 10,
-                }}
-              >
-                <animated.div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    color: "#fff",
-                    wordWrap: "break-word",
-                    fontSize: isMobile ? "2rem" : "4em",
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    fontFamily: "Barlow",
-                    marginTop: "5%",
-                    padding: "5%",
-                    backgroundColor: isMobile ? 'transparent' : slide.color,
-                    alignItems: "center",
-                    borderRadius: 20,
-                    width: "50%",
-                    height: 600,
-                  }}
-                >
-                  {slide.details.map((detail) => {
-                    return (
-                      <>
-                        <video
-                          src={detail.video}
-                          autoPlay={true}
-                          muted={true}
-                          playsInline={true}
-                          style={{
-                            width: isMobile ? (window.innerWidth - 20) : "1070px",
-                            position: "absolute",
-                            right: isMobile ? "10" : "15%",
-                            borderRadius: 20,
-                            overflow: "hidden",
-                          }}
-                        />
-                        <div style={{ zIndex: 100 }}>{detail.caption}</div>
-                      </>
-                    );
-                  })}
-                </animated.div>
-              </animated.div>
-            )}
-          </animated.div>
+          </div>
+   
+  
         </animated.div>
       )}
-    </>
+      <animated.div
+        style={{
+          ...featuresOpacity
+        }}
+      >
+          {slide && slide.details && (   
+              <AppDetail details={slide.details} browserDimensions={size} isMobile={isMobile}/>
+            )}
+       </animated.div>   
+       
+
+    </div>
   );
 }

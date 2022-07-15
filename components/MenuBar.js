@@ -19,10 +19,10 @@ export const MenuBar = ({ isMobile }) => {
 
   const mobileHeight = useSpring({
     from: {
-      height: "150px",
+      height: isMobile ? mobileExpanded ? `${height - 50}px` : "150px" : "100%"
     },
     to: {
-      height: mobileExpanded ? `${height - 50}px` : "150px" 
+      height: isMobile ? mobileExpanded ? `${height - 50}px` : "150px" : "100%"
     }
   });
 
@@ -60,16 +60,15 @@ export const MenuBar = ({ isMobile }) => {
           background: 'linear-gradient(to bottom, rgba(40,48,72, 0.5), rgba(133,147,152, 0.5))',
 
           backdropFilter: "blur(5px) opacity(0.5)",
-          borderTopRightRadius: isMobile ? 0 : 100,
-          borderBottomRightRadius: isMobile ? 0 : 100,
-          marginTop: isMobile ? 0 : 10,
-          marginBottom: 20,
+        
           boxShadow: "0px 0px 50px rgba(0, 0, 0, .25)",
           textAlign: "center",
           display: "flex",
           padding: mobileExpanded ? 50 : 0,
           width: isMobile ? "100%" : width * 0.2,
           justifyContent: "space-between",
+     
+          
         }}
       >
         

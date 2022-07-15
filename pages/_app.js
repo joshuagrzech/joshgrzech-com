@@ -1,10 +1,17 @@
 /* eslint-disable @next/next/no-page-custom-font */
-import "../styles/globals.css";
-import { NextUIProvider } from "@nextui-org/react";
-import { MenuBar } from "../components/MenuBar";
-import { useEffect, useState } from "react";
-import Head from "next/head";
-import { initializeApp } from "firebase/app";
+import '../styles/globals.css';
+
+import {
+  useEffect,
+  useState,
+} from 'react';
+
+import { initializeApp } from 'firebase/app';
+import Head from 'next/head';
+
+import { NextUIProvider } from '@nextui-org/react';
+
+import { MenuBar } from '../components/MenuBar';
 
 const firebaseConfig = {
   apiKey: process.env.FB_KEY,
@@ -18,12 +25,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 function MyApp({ Component, pageProps }) {
+  const [size, setSize] = useState({height: 1920, width: 1080})
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth / window.innerHeight < 1.5);
+    setSize({height: window.innerHeight, width: window.innerWidth});
+
     const handleResize = () => {
       setIsMobile(window.innerWidth / window.innerHeight < 1.5);
+      setSize({height: window.innerHeight, width: window.innerWidth});
     };
     window.addEventListener("resize", handleResize);
     return () => {
@@ -31,6 +42,14 @@ function MyApp({ Component, pageProps }) {
     };
   }, []);
 
+  const desktopHeight = () => {
+    if (isMobile) {
+      return
+    }
+    return {
+      height: size.height
+    };
+  }
   return (
     <NextUIProvider>
       <div
@@ -38,14 +57,9 @@ function MyApp({ Component, pageProps }) {
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           backgroundImage: 'linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%)',
-          
-
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          height: isMobile ? "300vh" : "100vh",
-          overflowX: "hidden",
-
+          height: isMobile ? "200vh" : "100%",
+          position: "sticky",
+      
         }}
       >
         <Head>
@@ -86,8 +100,13 @@ function MyApp({ Component, pageProps }) {
             rel="stylesheet"
           />
         </Head>
-        <MenuBar isMobile={isMobile} />
-        <Component {...pageProps} isMobile={isMobile} firestore={app} />
+        
+        <div style={{...desktopHeight(), position: isMobile ? "relative" : "sticky", top: 0, zIndex: 1}}>
+          <MenuBar isMobile={isMobile} />
+        </div>
+       
+        <Component {...pageProps} isMobile={isMobile} size={size} firestore={app} />
+      
       </div>
     </NextUIProvider>
   );

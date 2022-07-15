@@ -37,6 +37,7 @@ export const MenuButton = ({ href, selected, title, onClick, isMobile }) => {
         ...hoverAnimation,
         flex: 1,
         marginTop: 20,
+        marginRight: isMobile ? 30 : 0,
         
         borderRadius: 10,
         justifyContent: "center",
